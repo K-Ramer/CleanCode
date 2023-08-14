@@ -1,4 +1,4 @@
-﻿namespace MooGame;
+﻿namespace LaborationRefactoring;
 
 	internal class MooPlayer : IPlayer
 	{
