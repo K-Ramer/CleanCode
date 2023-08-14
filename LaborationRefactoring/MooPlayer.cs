@@ -1,9 +1,9 @@
 ﻿namespace MooGame;
 
-	public class MooPlayer : IPlayer
+	internal class MooPlayer : IPlayer
 	{
-    public string PlayerName { get; private set; }
-    public int NumberOfRoundsPlayed { get; private set; }
+    public string PlayerName { get; set; }
+    public int NumberOfRoundsPlayed { get; set; }
     int numberOfGuesses;
 
 
