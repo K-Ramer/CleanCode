@@ -5,43 +5,53 @@ using System.Collections.Generic;
 
 namespace LaborationRefactoring;
 
-class MainClass
+internal class MooGame
 {
+    IUI io;
+    IDAO dAO;
 
-    public static void Main(string[] args)
+    public MooGame(IUI io, IDAO dAO)
+    {
+        this.io = io;
+        this.dAO = dAO;
+    }
+
+    public void RunGame()
     {
 
         bool playOn = true;
-        Console.WriteLine("Enter your user name:\n");
-        string name = Console.ReadLine();
+        io.PrintString("Enter your user name:\n");
+        string playerName = io.GetString();
 
         while (playOn)
         {
             string goal = makeGoal();
 
 
-            Console.WriteLine("New game:\n");
+            io.PrintString("New game:\n");
             //comment out or remove next line to play real games!
-            Console.WriteLine("For practice, number is: " + goal + "\n");
-            string guess = Console.ReadLine();
+            io.PrintString("For practice, number is: " + goal + "\n");
+            string guess = io.GetString();
 
-            int nGuess = 1;
+            int numberOfGuesses = 1;
             string bbcc = checkBC(goal, guess);
-            Console.WriteLine(bbcc + "\n");
+            io.PrintString(bbcc + "\n");
             while (bbcc != "BBBB,")
             {
-                nGuess++;
-                guess = Console.ReadLine();
-                Console.WriteLine(guess + "\n");
+                numberOfGuesses++;
+                guess = io.GetString();
+                io.PrintString(guess + "\n");
                 bbcc = checkBC(goal, guess);
-                Console.WriteLine(bbcc + "\n");
+                io.PrintString(bbcc + "\n");
             }
-            StreamWriter output = new StreamWriter("result.txt", append: true);
-            output.WriteLine(name + "#&#" + nGuess);
-            output.Close();
+            //StreamWriter output = new StreamWriter("result.txt", append: true);
+            //output.WriteLine(playerName + "#&#" + nGuess);
+            //output.Close();
+            dAO.AddResultsToFile(playerName,numberOfGuesses);
             showTopList();
-            Console.WriteLine("Correct, it took " + nGuess + " guesses\nContinue?");
-            string answer = Console.ReadLine();
+            
+            io.PrintString("Correct, it took " + numberOfGuesses + " guesses\nContinue?");
+            string answer = io.GetString();
             if (answer != null && answer != "" && answer.Substring(0, 1) == "n")
             {
                 playOn = false;
@@ -94,14 +104,15 @@ class MainClass
     static void showTopList()
     {
         StreamReader input = new StreamReader("result.txt");
-        List<PlayerData> results = new List<PlayerData>();
+        
+        List<MooPlayer> results = new List<MooPlayer>();
         string line;
         while ((line = input.ReadLine()) != null)
         {
             string[] nameAndScore = line.Split(new string[] { "#&#" }, StringSplitOptions.None);
             string name = nameAndScore[0];
             int guesses = Convert.ToInt32(nameAndScore[1]);
-            PlayerData pd = new PlayerData(name, guesses);
+            MooPlayer pd = new MooPlayer(name, guesses);
             int pos = results.IndexOf(pd);
             if (pos < 0)
             {
@@ -116,9 +127,9 @@ class MainClass
         }
         results.Sort((p1, p2) => p1.Average().CompareTo(p2.Average()));
         Console.WriteLine("Player   games average");
-        foreach (PlayerData p in results)
+        foreach (MooPlayer p in results)
         {
-            Console.WriteLine(string.Format("{0,-9}{1,5:D}{2,9:F2}", p.Name, p.NGames, p.Average()));
+            Console.WriteLine(string.Format("{0,-9}{1,5:D}{2,9:F2}", p.PlayerName, p.NumberOfRoundsPlayed, p.Average()));
         }
         input.Close();
     }
