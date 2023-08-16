@@ -44,9 +44,6 @@ internal class MooGame
                 bbcc = checkBC(goal, guess);
                 io.PrintString(bbcc + "\n");
             }
-            //StreamWriter output = new StreamWriter("result.txt", append: true);
-            //output.WriteLine(playerName + "#&#" + nGuess);
-            //output.Close();
             dAO.AddResultsToFile(playerName,numberOfGuesses);
             showTopList();
             
