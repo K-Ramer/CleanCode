@@ -24,18 +24,6 @@ public class MooPlayer : IPlayer
     {
         return (double)numberOfGuesses / NumberOfRoundsPlayed;
     }
-
-
-    public override bool Equals(Object p)
-    {
-        return PlayerName.Equals(((MooPlayer)p).PlayerName);
-    }
-
-
-    public override int GetHashCode()
-    {
-        return PlayerName.GetHashCode();
-    }
 }
 
 	

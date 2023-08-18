@@ -43,7 +43,7 @@ internal class MooGame
             dAO.AddMooResults(playerName,numberOfGuesses);
 
             topList = sortToplist();
-            io.PrintMooTopList(topList);
+            io.ShowMooTopList(topList);
 
             io.ShowRoundFeedback(numberOfGuesses);
 
@@ -88,8 +88,7 @@ internal class MooGame
 
         return $"{bullsSubstring},{cowsSubstring}";
     }
-
-      
+    
     private List<MooPlayer> sortToplist()
     { 
         var results = dAO.GetMooResults();
