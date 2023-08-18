@@ -17,7 +17,7 @@ namespace LaborationRefactoring
 			io.PrintMenu();
 
 			int choice;
-			int.TryParse(io.GetString(), out choice);
+			int.TryParse(Console.ReadLine(), out choice);
 
 
             switch (choice)
@@ -28,11 +28,11 @@ namespace LaborationRefactoring
 					break;
 
 				case 2:
-					io.PrintString("Other game");
+					Console.WriteLine("Other game");
 					break;
 
 				default:
-					io.PrintString("No such choice. Try again.");
+                    Console.WriteLine("No such choice. Try again.");
 					break;
 
             }

@@ -3,8 +3,8 @@ namespace LaborationRefactoring
 {
 	internal interface IDAO
 	{
-        internal void ReadResultsFromFile();
-        public void AddResultsToFile(string name, int numberOfGuesses);
+        public List<MooPlayer> GetMooResults();
+        public void AddMooResults(string name, int numberOfGuesses);
 
     }
 }

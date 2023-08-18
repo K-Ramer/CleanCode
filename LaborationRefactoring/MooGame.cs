@@ -1,7 +1,6 @@
 ﻿using System;
 using System.IO;
 using System.Collections.Generic;
-//test
 
 namespace LaborationRefactoring;
 
@@ -20,116 +19,96 @@ internal class MooGame
     {
 
         bool playOn = true;
-        io.PrintString("Enter your user name:\n");
-        string playerName = io.GetString();
+        string playerName = io.GetUserName();
+        List<MooPlayer> topList = new List<MooPlayer>();
 
         while (playOn)
         {
-            string goal = makeGoal();
+            string answer = generateNewAnswer();
+            string playerGuess; 
+            int numberOfGuesses = 0;
+            string? answerFeedbackBullsOrCows = null;
+           
+            io.StartNewGame(answer);
 
-
-            io.PrintString("New game:\n");
-            //comment out or remove next line to play real games!
-            io.PrintString("For practice, number is: " + goal + "\n");
-            string guess = io.GetString();
-
-            int numberOfGuesses = 1;
-            string bbcc = checkBC(goal, guess);
-            io.PrintString(bbcc + "\n");
-            while (bbcc != "BBBB,")
+            while (answerFeedbackBullsOrCows != "BBBB,")
             {
                 numberOfGuesses++;
-                guess = io.GetString();
-                io.PrintString(guess + "\n");
-                bbcc = checkBC(goal, guess);
-                io.PrintString(bbcc + "\n");
+                playerGuess = io.GetGuess();
+                
+                answerFeedbackBullsOrCows = compareGuessToAnswer(answer, playerGuess);
+                io.ShowGuessFeedback(answerFeedbackBullsOrCows);
             }
-            dAO.AddResultsToFile(playerName,numberOfGuesses);
-            showTopList();
-            
-            io.PrintString("Correct, it took " + numberOfGuesses + " guesses\nContinue?");
-            string answer = io.GetString();
-            if (answer != null && answer != "" && answer.Substring(0, 1) == "n")
-            {
-                playOn = false;
-            }
+
+            dAO.AddMooResults(playerName,numberOfGuesses);
+
+            topList = sortToplist();
+            io.PrintMooTopList(topList);
+
+            io.ShowRoundFeedback(numberOfGuesses);
+
+            playOn = io.ContinueOrQuit();
         }
     }
-    static string makeGoal()
+
+    private string generateNewAnswer()
     {
         Random randomGenerator = new Random();
-        string goal = "";
+        string answer = "";
         for (int i = 0; i < 4; i++)
         {
             int random = randomGenerator.Next(10);
             string randomDigit = "" + random;
-            while (goal.Contains(randomDigit))
+            while (answer.Contains(randomDigit))
             {
                 random = randomGenerator.Next(10);
                 randomDigit = "" + random;
             }
-            goal = goal + randomDigit;
+            answer = answer + randomDigit;
         }
-        return goal;
+        return answer;
     }
 
-    static string checkBC(string goal, string guess)
+    private string compareGuessToAnswer(string answer, string playerGuess)
     {
-        int cows = 0, bulls = 0;
-        guess += "    ";     // if player entered less than 4 chars
+        int bulls = 0, cows = 0;
+        const string BullsString = "BBBB";
+        const string CowsString = "CCCC";
+
+        if (playerGuess.Length < 4)
+        {
+            playerGuess = playerGuess.PadRight(4);
+        }
+
         for (int i = 0; i < 4; i++)
         {
-            for (int j = 0; j < 4; j++)
+            if (answer[i] == playerGuess[i])
             {
-                if (goal[i] == guess[j])
-                {
-                    if (i == j)
-                    {
-                        bulls++;
-                    }
-                    else
-                    {
-                        cows++;
-                    }
-                }
+                bulls++;
+            }
+            else if (playerGuess.Contains(answer[i]))
+            {
+                cows++;
             }
         }
-        return "BBBB".Substring(0, bulls) + "," + "CCCC".Substring(0, cows);
+
+        string bullsSubstring = BullsString.Substring(0, bulls);
+        string cowsSubstring = CowsString.Substring(0, cows);
+
+        return $"{bullsSubstring},{cowsSubstring}";
     }
 
+      
+    private List<MooPlayer> sortToplist()
+    { 
+        var results = dAO.GetMooResults();
 
-    static void showTopList()
-    {
-        StreamReader input = new StreamReader("result.txt");
-        
-        List<MooPlayer> results = new List<MooPlayer>();
-        string line;
-        while ((line = input.ReadLine()) != null)
-        {
-            string[] nameAndScore = line.Split(new string[] { "#&#" }, StringSplitOptions.None);
-            string name = nameAndScore[0];
-            int guesses = Convert.ToInt32(nameAndScore[1]);
-            MooPlayer pd = new MooPlayer(name, guesses);
-            int pos = results.IndexOf(pd);
-            if (pos < 0)
-            {
-                results.Add(pd);
-            }
-            else
-            {
-                results[pos].Update(guesses);
-            }
-
-
-        }
         results.Sort((p1, p2) => p1.Average().CompareTo(p2.Average()));
-        Console.WriteLine("Player   games average");
-        foreach (MooPlayer p in results)
-        {
-            Console.WriteLine(string.Format("{0,-9}{1,5:D}{2,9:F2}", p.PlayerName, p.NumberOfRoundsPlayed, p.Average()));
-        }
-        input.Close();
+
+        return results;
     }
+
+   
 }
 
 
