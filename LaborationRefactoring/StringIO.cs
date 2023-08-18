@@ -8,10 +8,20 @@ namespace LaborationRefactoring
         {
             return Console.ReadLine();
         }
+
         public string GetUserName()
         {
             PrintString("Enter your user name:\n");
             return GetString();
+        }
+
+        public int GetNumber()
+        {
+            int choice;
+            while(!int.TryParse(GetString(), out choice))
+                PrintString("A number please.");
+
+            return choice;
         }
 
         public void StartNewGame(string answer)
@@ -24,14 +34,20 @@ namespace LaborationRefactoring
 
         public string GetGuess()
         {
-            string playerGuess = GetString();
-            PrintString(playerGuess + "\n");
-            return playerGuess;
-        }
+            string input = GetString();
 
+            while (!(input.Length <= 4 && int.TryParse(input, out _)))
+            {
+                PrintString("Invalid input. Please enter a valid number with up to 4 digits.");
+                input = GetString();
+            }
+
+            return input;
+        }
+    
         public void PrintMenu()
         {
-            PrintString("Menu\n\n1. MooGame\n2. Other Game");
+            PrintString("Menu\n\n1. MooGame\n2. Other Game\n3. Quit");
         }
 
         private void PrintString(string output)
@@ -55,20 +71,33 @@ namespace LaborationRefactoring
             PrintString(answerFeedbackBullsOrCows + "\n");
         }
 
-        public void ShowRoundFeedback(int numberOfGuesses) //Move "keep playing?"
+        public void ShowRoundFeedback(int numberOfGuesses)
         {
-            PrintString("Correct, it took " + numberOfGuesses + " guesses\nContinue?");
+            PrintString("Correct, it took " + numberOfGuesses + " guesses\n");
         }
 
         public bool ContinueOrQuit()
         {
-            string playerInput = GetString();
-            if (playerInput != null && playerInput != "" && playerInput.Substring(0, 1) == "n")
+            PrintString("\nContinue?");
+
+            string playerInput = GetString().ToLower().Substring(0, 1);
+
+            while (playerInput != "y" && playerInput != "n")
             {
-                return false;
+                Console.Write("Invalid response. Please enter 'y' or 'n': ");
+                playerInput = GetString().ToLower().Substring(0, 1);
             }
-            else
+
+            if (playerInput == "y")
                 return true;
+
+            else
+                return false;
+        }
+
+        public void WrongInput()
+        {
+            PrintString("No such choice. Try again.");
         }
     }
 }

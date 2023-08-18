@@ -16,11 +16,7 @@ namespace LaborationRefactoring
 		{
 			io.PrintMenu();
 
-			int choice;
-			int.TryParse(Console.ReadLine(), out choice);
-
-
-            switch (choice)
+            switch (io.GetNumber())
 			{
 				case 1:
 					MooGame mooGame = new MooGame(io, dAO);
@@ -28,12 +24,17 @@ namespace LaborationRefactoring
 					break;
 
 				case 2:
-					Console.WriteLine("Other game");
+					//Put other game here
 					break;
 
-				default:
-                    Console.WriteLine("No such choice. Try again.");
-					break;
+                case 3:
+					Environment.Exit(0);
+                    break;
+
+                default:
+					io.WrongInput();
+                    Thread.Sleep(1500);
+                    break;
 
             }
 

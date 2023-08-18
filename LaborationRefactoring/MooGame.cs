@@ -54,19 +54,10 @@ internal class MooGame
     private string generateNewAnswer()
     {
         Random randomGenerator = new Random();
-        string answer = "";
-        for (int i = 0; i < 4; i++)
-        {
-            int random = randomGenerator.Next(10);
-            string randomDigit = "" + random;
-            while (answer.Contains(randomDigit))
-            {
-                random = randomGenerator.Next(10);
-                randomDigit = "" + random;
-            }
-            answer = answer + randomDigit;
-        }
-        return answer;
+
+        string randomFourDigitString = randomGenerator.Next(0, 10000).ToString("D4");
+       
+        return randomFourDigitString;
     }
 
     private string compareGuessToAnswer(string answer, string playerGuess)
