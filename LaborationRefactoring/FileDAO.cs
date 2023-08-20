@@ -41,6 +41,7 @@ internal class FileDAO : IDAO
 	{
         using StreamWriter output = new StreamWriter("result.txt", append: true);
         output.WriteLine(name + "#&#" + numberOfGuesses);
+        // Close writer?
     }
 }
 

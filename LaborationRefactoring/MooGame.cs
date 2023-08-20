@@ -9,6 +9,8 @@ internal class MooGame
     IUI io;
     IDAO dAO;
 
+    // Om uppgiften går ut på att refaktorisera för att kunna ha fler spel så borde det nog finnas ett IGame interface?
+    // Borde väl minst kunna köra ett spel, säga vad det heter och ge ut sin topplista?
     public MooGame(IUI io, IDAO dAO)
     {
         this.io = io;
@@ -25,23 +27,46 @@ internal class MooGame
         while (playOn)
         {
             string answer = generateNewAnswer();
-            string playerGuess; 
+            string playerGuess;
             int numberOfGuesses = 0;
             string? answerFeedbackBullsOrCows = null;
-           
+
             io.StartNewGame(answer);
 
             while (answerFeedbackBullsOrCows != "BBBB,")
             {
+                // Här kanske jag lurade dig lite.
+                // Om jag fattar originalkoden, utan att ha kört den, så ser det ut som den skriver ut ungefär:
+                // New game:
+                // For practice, number is: 1234
+                // ,
+                // {gissning} (input och output)
+                // B,C
+                // {gissning} (input och output)
+                // B,CC
+                // ...
+
+                // Nya koden kommer skriva:
+                // New game:
+                // For practice, number is: 1234
+                // {gissning} (input bara)
+                // B,C
+                // {gissning} (input bara)
+                // B,CC
+                // ...
+
+                // DVS nya koden saknar första jämförelsen (jag hade bara skrivit ut "," i StartNewGame...)
+                // Samt att printa ut gissningen.
                 numberOfGuesses++;
                 playerGuess = io.GetGuess();
-                
+
                 answerFeedbackBullsOrCows = compareGuessToAnswer(answer, playerGuess);
                 io.ShowGuessFeedback(answerFeedbackBullsOrCows);
             }
 
             dAO.AddMooResults(playerName,numberOfGuesses);
 
+            // Lägg dessa två rader i egen funktion så kan du även lägga in listan som du gör i början där.
             topList = sortToplist();
             io.ShowMooTopList(topList);
 
@@ -56,7 +81,7 @@ internal class MooGame
         Random randomGenerator = new Random();
 
         string randomFourDigitString = randomGenerator.Next(0, 10000).ToString("D4");
-       
+
         return randomFourDigitString;
     }
 
@@ -79,6 +104,10 @@ internal class MooGame
             }
             else if (playerGuess.Contains(answer[i]))
             {
+                // Vad händer här om answer = 4444, guess = 1234
+                // Borde det inte ge B,CCC?
+                // Ser ut som gamla koden också kommer ge det men det känns inte rätt.
+                // Om ni skulle skriva unit test så skulle jag ställa upp ett och försöka lösa det.
                 cows++;
             }
         }
@@ -88,9 +117,9 @@ internal class MooGame
 
         return $"{bullsSubstring},{cowsSubstring}";
     }
-    
-    private List<MooPlayer> sortToplist()
-    { 
+
+    private List<MooPlayer> sortToplist() // Kanske ska heta getSortedToplist?
+    {
         var results = dAO.GetMooResults();
 
         results.Sort((p1, p2) => p1.Average().CompareTo(p2.Average()));
@@ -98,7 +127,7 @@ internal class MooGame
         return results;
     }
 
-   
+
 }
 
 
