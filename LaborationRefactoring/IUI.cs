@@ -9,7 +9,7 @@ internal interface IUI
 	public string GetUserName();
 
 	public void ShowGuessFeedback(string answerFeedbackBullsOrCows);
-    public void ShowMenu();
+    public void ShowMenu(List<IGame>games);
     public void ShowMooTopList(List<MooPlayer> results);
 	public void ShowRoundFeedback(int numberOfGuesses);
     public void StartNewGame(string answer);

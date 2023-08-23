@@ -6,6 +6,8 @@ namespace LaborationRefactoring;
 
 internal class MooGame : IGame
 {
+    private const string GameName = "MooGame"; 
+
     IUI io;
     IDAO dAO;
 
@@ -15,16 +17,21 @@ internal class MooGame : IGame
         this.dAO = dAO;
     }
 
+    public string GetGameName()
+    {
+        return GameName;
+    }
+
     public void RunGame()
     {
 
         bool playOn = true;
         string playerName = io.GetUserName();
-        List<MooPlayer> topList = new List<MooPlayer>();
+        
 
         while (playOn)
         {
-            string answer = generateNewAnswer();
+            string answer = GenerateNewAnswer();
             string playerGuess; 
             int numberOfGuesses = 0;
             string? answerFeedbackBullsOrCows = null;
@@ -36,14 +43,13 @@ internal class MooGame : IGame
                 numberOfGuesses++;
                 playerGuess = io.GetGuess();
                 
-                answerFeedbackBullsOrCows = compareGuessToAnswer(answer, playerGuess);
+                answerFeedbackBullsOrCows = CompareGuessToAnswer(answer, playerGuess);
                 io.ShowGuessFeedback(answerFeedbackBullsOrCows);
             }
 
             dAO.AddMooResults(playerName,numberOfGuesses);
 
-            topList = sortToplist();
-            io.ShowMooTopList(topList);
+            ShowTopList();
 
             io.ShowRoundFeedback(numberOfGuesses);
 
@@ -51,7 +57,15 @@ internal class MooGame : IGame
         }
     }
 
-    private string generateNewAnswer()
+    private void ShowTopList()
+    {
+        var results = dAO.GetMooResults();
+        results.Sort((player1, player2) => player1.AverageNumberOfGuesses().CompareTo(player2.AverageNumberOfGuesses()));
+        
+        io.ShowMooTopList(results);
+    }
+
+    private string GenerateNewAnswer()
     {
         Random randomGenerator = new Random();
 
@@ -60,7 +74,7 @@ internal class MooGame : IGame
         return randomFourDigitString;
     }
 
-    private string compareGuessToAnswer(string answer, string playerGuess)
+    private string CompareGuessToAnswer(string answer, string playerGuess)
     {
         int bulls = 0, cows = 0;
         const string BullsString = "BBBB";
@@ -88,17 +102,6 @@ internal class MooGame : IGame
 
         return $"{bullsSubstring},{cowsSubstring}";
     }
-    
-    private List<MooPlayer> sortToplist()
-    { 
-        var results = dAO.GetMooResults();
-
-        results.Sort((player1, player2) => player1.AverageNumberOfGuesses().CompareTo(player2.AverageNumberOfGuesses()));
-
-        return results;
-    }
-
-   
 }
 
 

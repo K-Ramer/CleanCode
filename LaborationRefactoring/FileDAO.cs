@@ -3,10 +3,7 @@ namespace LaborationRefactoring;
 
 internal class FileDAO : IDAO
 {
-    //public FileDAO()
-    //{
-    //}
-
+   
     public List<MooPlayer> GetMooResults()
 	{
         List<MooPlayer> results = new List<MooPlayer>();

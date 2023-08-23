@@ -4,9 +4,6 @@ namespace LaborationRefactoring;
 
 public class StringIO : IUI
 {
-    private readonly string menu = "Menu\n\n1. MooGame\n2. Other Game\n3. Quit";
-
-
     private static string GetString()
     {
         return Console.ReadLine();
@@ -52,13 +49,23 @@ public class StringIO : IUI
         PrintString(answerFeedbackBullsOrCows + "\n");
     }
 
-    public void ShowMenu()
+    public void ShowMenu(List<IGame>games)
     {
-        PrintString(menu);
+        PrintString("Menu\n\n");
+        int IndexNr = 1;
+
+        foreach(IGame game in games)
+        {
+            PrintString($"{IndexNr}. {game.GetGameName()}");
+            IndexNr++;
+        }
+
+        PrintString($"{IndexNr}. Exit");
     }
 
     public void ShowMooTopList(List<MooPlayer> results)
     {
+
         PrintString("Player   games average");
 
         if (results.Count == 0)

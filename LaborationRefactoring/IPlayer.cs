@@ -1,6 +1,6 @@
 ﻿namespace LaborationRefactoring;
 
-internal interface IPlayer
+public interface IPlayer
 {
     public string PlayerName { get; set; }
     public int NumberOfRoundsPlayed { get; set; }
