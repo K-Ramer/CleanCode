@@ -4,7 +4,7 @@ using System.Collections.Generic;
 
 namespace LaborationRefactoring;
 
-internal class MooGame
+internal class MooGame : IGame
 {
     IUI io;
     IDAO dAO;

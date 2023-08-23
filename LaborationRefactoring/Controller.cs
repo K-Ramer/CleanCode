@@ -27,11 +27,11 @@ internal class Controller
 				//Put other game here
 				break;
 
-                case 3:
+            case 3:
 				Environment.Exit(0);
                     break;
 
-                default:
+            default:
 				io.WrongInput();
                     Thread.Sleep(1500);
                     break;
