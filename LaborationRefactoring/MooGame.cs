@@ -93,7 +93,7 @@ internal class MooGame
     { 
         var results = dAO.GetMooResults();
 
-        results.Sort((p1, p2) => p1.Average().CompareTo(p2.Average()));
+        results.Sort((player1, player2) => player1.AverageNumberOfGuesses().CompareTo(player2.AverageNumberOfGuesses()));
 
         return results;
     }

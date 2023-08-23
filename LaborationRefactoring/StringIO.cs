@@ -60,7 +60,7 @@ public class StringIO : IUI
         
         foreach (MooPlayer player in results)
         {
-            PrintString(string.Format("{0,-9}{1,5:D}{2,9:F2}", player.PlayerName, player.NumberOfRoundsPlayed, player.Average()));
+            PrintString(string.Format("{0,-9}{1,5:D}{2,9:F2}", player.PlayerName, player.NumberOfRoundsPlayed, player.AverageNumberOfGuesses()));
         }
         
     }

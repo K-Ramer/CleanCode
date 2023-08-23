@@ -14,13 +14,13 @@ public class MooPlayer : IPlayer
         numberOfGuesses = guesses;
     }
 
-    public void Update(int guesses)
+    public void UpdateGuesses(int guesses)
     {
         numberOfGuesses += guesses;
         NumberOfRoundsPlayed++;
     }
 
-    public double Average()
+    public double AverageNumberOfGuesses()
     {
         return (double)numberOfGuesses / NumberOfRoundsPlayed;
     }

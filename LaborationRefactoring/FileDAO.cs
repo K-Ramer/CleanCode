@@ -13,10 +13,11 @@ internal class FileDAO : IDAO
 
         List<MooPlayer> results = new List<MooPlayer>();
 
+        string splitPoint = "#&#";
         string lineValue;
         while ((lineValue = inputFromResults.ReadLine()) != null)
         {
-            string[] nameAndScore = lineValue.Split(new string[] { "#&#" }, StringSplitOptions.None);
+            string[] nameAndScore = lineValue.Split(new string[] { splitPoint }, StringSplitOptions.None);
             string name = nameAndScore[0];
             int guesses = Convert.ToInt32(nameAndScore[1]);
 
@@ -29,7 +30,7 @@ internal class FileDAO : IDAO
             }
             else
             {
-                results[pos].Update(guesses);
+                results[pos].UpdateGuesses(guesses);
             }
         }
 
@@ -39,8 +40,9 @@ internal class FileDAO : IDAO
 
 	public void AddMooResults(string name, int numberOfGuesses)
 	{
+        string splitPoint = "#&#";
         using StreamWriter output = new StreamWriter("result.txt", append: true);
-        output.WriteLine(name + "#&#" + numberOfGuesses);
+        output.WriteLine(name + splitPoint + numberOfGuesses);
     }
 }
 
