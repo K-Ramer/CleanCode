@@ -16,7 +16,7 @@ public interface IUI
 
 	public bool ContinueOrQuit();
 
-	public void WrongInput();
+	public void PromptForNewChoiceInput();
 
 }
 

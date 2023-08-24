@@ -68,7 +68,7 @@ public class MooGame : IGame
 
     public static void SortMooResults(List<MooPlayer> results)
     {
-        results.Sort((player1, player2) => player1.AverageNumberOfGuesses().CompareTo(player2.AverageNumberOfGuesses()));
+        results.Sort((player1, player2) => player1.CalculateAverageNumberOfGuesses().CompareTo(player2.CalculateAverageNumberOfGuesses()));
     }
 
     public string GenerateNewAnswer()

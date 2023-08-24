@@ -76,7 +76,7 @@ public class StringIO : IUI
         {
             foreach (MooPlayer player in results)
             {
-                PrintString(string.Format("{0,-9}{1,5:D}{2,9:F2}", player.PlayerName, player.NumberOfRoundsPlayed, player.AverageNumberOfGuesses()));
+                PrintString(string.Format("{0,-9}{1,5:D}{2,9:F2}", player.PlayerName, player.NumberOfRoundsPlayed, player.CalculateAverageNumberOfGuesses()));
             }
         }
     }
@@ -118,7 +118,7 @@ public class StringIO : IUI
     }
 
 
-    public void WrongInput()
+    public void PromptForNewChoiceInput()
     {
         PrintString("No such choice. Try again.");
     }

@@ -20,7 +20,7 @@ public class MooPlayer : IPlayer
         NumberOfRoundsPlayed++;
     }
 
-    public double AverageNumberOfGuesses()
+    public double CalculateAverageNumberOfGuesses()
     {
         return (double)numberOfGuesses / NumberOfRoundsPlayed;
     }
