@@ -1,7 +1,7 @@
 ﻿using System;
 namespace LaborationRefactoring;
 
-internal interface IUI
+public interface IUI
 {
 	
 	public string GetGuess();

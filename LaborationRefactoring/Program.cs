@@ -3,7 +3,7 @@ namespace LaborationRefactoring;
 
 internal class Program
 {
-	static void Main(string[] args)
+    static void Main(string[] args)
 	{
 		IUI io = new StringIO();
 		IDAO dAO = new FileDAO();

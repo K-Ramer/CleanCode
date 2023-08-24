@@ -1,15 +1,16 @@
-﻿using System;
-using System.IO;
-using System.Collections.Generic;
+﻿namespace LaborationRefactoring;
 
-namespace LaborationRefactoring;
-
-internal class MooGame : IGame
+public class MooGame : IGame
 {
-    private const string GameName = "MooGame"; 
+    private const string GameName = "MooGame";
 
     IUI io;
     IDAO dAO;
+
+    public MooGame()
+    {
+
+    }
 
     public MooGame(IUI io, IDAO dAO)
     {
@@ -57,15 +58,20 @@ internal class MooGame : IGame
         }
     }
 
-    private void ShowTopList()
+    public void ShowTopList()
     {
-        var results = dAO.GetMooResults();
-        results.Sort((player1, player2) => player1.AverageNumberOfGuesses().CompareTo(player2.AverageNumberOfGuesses()));
-        
+        List<MooPlayer> results = dAO.GetMooResults();
+        SortMooResults(results);
+
         io.ShowMooTopList(results);
     }
 
-    private string GenerateNewAnswer()
+    public static void SortMooResults(List<MooPlayer> results)
+    {
+        results.Sort((player1, player2) => player1.AverageNumberOfGuesses().CompareTo(player2.AverageNumberOfGuesses()));
+    }
+
+    public string GenerateNewAnswer()
     {
         Random randomGenerator = new Random();
 
@@ -74,7 +80,7 @@ internal class MooGame : IGame
         return randomFourDigitString;
     }
 
-    private string CompareGuessToAnswer(string answer, string playerGuess)
+    public static string CompareGuessToAnswer(string answer, string playerGuess)
     {
         int bulls = 0, cows = 0;
         const string BullsString = "BBBB";

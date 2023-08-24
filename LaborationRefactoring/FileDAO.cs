@@ -1,7 +1,7 @@
 ﻿using System;
 namespace LaborationRefactoring;
 
-internal class FileDAO : IDAO
+public class FileDAO : IDAO
 {
    
     public List<MooPlayer> GetMooResults()
@@ -36,7 +36,7 @@ internal class FileDAO : IDAO
 
         catch (FileNotFoundException ex)
         {
-            Console.WriteLine("File not found: " + ex.Message);
+            Console.WriteLine("Results file not found: " + ex.Message);
         }
         catch (IOException ex)
         {

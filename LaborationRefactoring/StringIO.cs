@@ -97,21 +97,24 @@ public class StringIO : IUI
 
     public bool ContinueOrQuit()
     {
-        PrintString("\nContinue?");
-
-        string playerInput = GetString().ToLower().Substring(0, 1);
-
-        while (playerInput != "y" && playerInput != "n")
+        while (true)
         {
-            Console.Write("Invalid response. Please enter 'y' or 'n': ");
-            playerInput = GetString().ToLower().Substring(0, 1);
+            PrintString("\nContinue?");
+            string playerInput = GetString().Trim().ToLower();
+
+            if (playerInput == "y")
+            {
+                return true;
+            }
+            else if (playerInput == "n")
+            {
+                return false;
+            }
+            else
+            {
+                PrintString("Invalid response. Please enter 'y' or 'n'.");
+            }
         }
-
-        if (playerInput == "y")
-            return true;
-
-        else
-            return false;
     }
 
 
