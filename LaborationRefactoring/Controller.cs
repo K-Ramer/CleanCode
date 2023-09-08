@@ -1,42 +1,40 @@
-﻿using System;
-namespace LaborationRefactoring;
+﻿namespace LaborationRefactoring;
 
 internal class Controller
 {
-	IUI io;
-	IDAO dAO;
-	List<IGame> games;
+    IUI io;
+    List<IGame> games;
 
-    public Controller(IUI io, IDAO dAO, List<IGame> games)
-	{
-		this.io = io;
-		this.dAO = dAO;
-		this.games = games;
-	}
-
-	public void Start()
+    public Controller(IUI io, List<IGame> games)
     {
-		io.ShowMenu(games);
+        this.io = io;
+        this.games = games;
+    }
 
-		while (true)
-		{
-			int selectedIndex = io.GetNumber() - 1;
+    public void Start()
+    {
+        io.ShowMenu(games);
 
-			if (selectedIndex >= 0 && selectedIndex < games.Count)
-			{
-				IGame selectedGame = games[selectedIndex];
-				selectedGame.RunGame();
-			}
-			else if (selectedIndex == games.Count)
-			{
-				Environment.Exit(0);
-			}
-			else
-			{
-				io.PromptForNewChoiceInput();	
-			}
+        while (true)
+        {
+            int selectedIndex = io.GetNumber() - 1;
 
-		}
-	}
+            if (selectedIndex >= 0 && selectedIndex < games.Count)
+            {
+                IGame selectedGame = games[selectedIndex];
+                selectedGame.RunGame();
+                io.ShowMenu(games);
+            }
+            else if (selectedIndex == games.Count)
+            {
+                Environment.Exit(0);
+            }
+            else
+            {
+                io.PromptForNewChoiceInput();
+            }
+
+        }
+    }
 }
 

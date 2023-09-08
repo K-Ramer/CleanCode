@@ -5,12 +5,10 @@ namespace LaborationRefactoring.Test;
 [TestClass]
 public class MooGameTests
 {
-
     [TestMethod]
     public void TestAnswer()
     {
-        MooGame mooGame = new MooGame();
-        string answer = mooGame.GenerateNewAnswer();
+        string answer = MooGame.GenerateNewAnswer();
 
         Assert.IsNotNull(answer);
         Assert.IsTrue(answer.Length == 4);
@@ -18,38 +16,29 @@ public class MooGameTests
         Assert.IsTrue(Regex.IsMatch(answer, @"^\d+$"));
     }
 
-    [TestMethod]
-    public void TestAnswerGuessComparison()
+    [DataTestMethod]
+    [DataRow("4025", "0425", "BB,CC")]
+    [DataRow("4025", "7777", ",")]
+    [DataRow("4025", "4025", "BBBB,")]
+    public void TestAnswerGuessComparison(string answer, string guess, string expectedResult)
     {
-        string mockAnswer = "4025";
+        string actualResult = MooGame.CompareGuessToAnswer(answer, guess);
 
-        string mockGuess1 = "0425";
-        string mockGuess2 = "7777";
-        string mockGuess3 = "4025";
+        Assert.AreEqual(expectedResult, actualResult);
 
-        string expectedResultGuess1 = "BB,CC";
-        string expectedResultGuess2 = ",";
-        string expectedResultGuess3 = "BBBB,";
-
-        MooGame mooGame = new MooGame();
-
-        Assert.AreEqual(expectedResultGuess1, MooGame.CompareGuessToAnswer(mockAnswer, mockGuess1));
-        Assert.AreEqual(expectedResultGuess2, MooGame.CompareGuessToAnswer(mockAnswer, mockGuess2));
-        Assert.AreEqual(expectedResultGuess3, MooGame.CompareGuessToAnswer(mockAnswer, mockGuess3));
     }
 
     [TestMethod]
     public void TestTopListOrder()
     {
-        MooGame mooGame = new MooGame();
-        List<MooPlayer> mockResults = new List<MooPlayer>
+        List<MooPlayer> actualResults = new List<MooPlayer>
         {
             new MooPlayer("Player1", 5),
             new MooPlayer("Player2", 3),
             new MooPlayer("Player3", 6)
         };
 
-        MooGame.SortMooResults(mockResults);
+        MooGame.SortMooResults(actualResults);
 
         List<MooPlayer> expectedResultOrder = new List<MooPlayer>
         {
@@ -58,6 +47,6 @@ public class MooGameTests
             new MooPlayer("Player3", 6),
         };
 
-        CollectionAssert.AreEqual(expectedResultOrder, mockResults);
+        CollectionAssert.AreEqual(expectedResultOrder, actualResults);
     }
 }

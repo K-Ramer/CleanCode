@@ -1,5 +1,4 @@
-﻿using System;
-namespace LaborationRefactoring;
+﻿namespace LaborationRefactoring;
 
 public interface IGame
 {

@@ -6,7 +6,6 @@ public class MooPlayer : IPlayer
     public int NumberOfRoundsPlayed { get; set; }
     int numberOfGuesses;
 
-
     public MooPlayer(string name, int guesses)
     {
         this.PlayerName = name;
@@ -36,4 +35,4 @@ public class MooPlayer : IPlayer
     }
 }
 
-	
+

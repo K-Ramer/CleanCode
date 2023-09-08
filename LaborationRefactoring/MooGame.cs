@@ -28,29 +28,31 @@ public class MooGame : IGame
 
         bool playOn = true;
         string playerName = io.GetUserName();
-        
+        List<MooPlayer> results;
 
         while (playOn)
         {
             string answer = GenerateNewAnswer();
-            string playerGuess; 
+            string playerGuess;
             int numberOfGuesses = 0;
             string? answerFeedbackBullsOrCows = null;
-           
+
             io.StartNewGame(answer);
 
             while (answerFeedbackBullsOrCows != "BBBB,")
             {
                 numberOfGuesses++;
                 playerGuess = io.GetGuess();
-                
+
                 answerFeedbackBullsOrCows = CompareGuessToAnswer(answer, playerGuess);
                 io.ShowGuessFeedback(answerFeedbackBullsOrCows);
             }
 
-            dAO.AddMooResults(playerName,numberOfGuesses);
+            dAO.AddMooResults(playerName, numberOfGuesses);
 
-            ShowTopList();
+            results = dAO.GetMooResults();
+            SortMooResults(results);
+            io.ShowMooTopList(results);
 
             io.ShowRoundFeedback(numberOfGuesses);
 
@@ -58,25 +60,17 @@ public class MooGame : IGame
         }
     }
 
-    public void ShowTopList()
-    {
-        List<MooPlayer> results = dAO.GetMooResults();
-        SortMooResults(results);
-
-        io.ShowMooTopList(results);
-    }
-
     public static void SortMooResults(List<MooPlayer> results)
     {
         results.Sort((player1, player2) => player1.CalculateAverageNumberOfGuesses().CompareTo(player2.CalculateAverageNumberOfGuesses()));
     }
 
-    public string GenerateNewAnswer()
+    public static string GenerateNewAnswer()
     {
         Random randomGenerator = new Random();
 
         string randomFourDigitString = randomGenerator.Next(0, 10000).ToString("D4");
-       
+
         return randomFourDigitString;
     }
 

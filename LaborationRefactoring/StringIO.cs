@@ -1,6 +1,4 @@
-﻿using System;
-
-namespace LaborationRefactoring;
+﻿namespace LaborationRefactoring;
 
 public class StringIO : IUI
 {
@@ -13,7 +11,6 @@ public class StringIO : IUI
     {
         Console.WriteLine(output);
     }
-
 
     public string GetGuess()
     {
@@ -31,7 +28,7 @@ public class StringIO : IUI
     public int GetNumber()
     {
         int choice;
-        while(!int.TryParse(GetString(), out choice))
+        while (!int.TryParse(GetString(), out choice))
             PrintString("A number please.");
 
         return choice;
@@ -43,18 +40,17 @@ public class StringIO : IUI
         return GetString();
     }
 
-
     public void ShowGuessFeedback(string answerFeedbackBullsOrCows)
     {
         PrintString(answerFeedbackBullsOrCows + "\n");
     }
 
-    public void ShowMenu(List<IGame>games)
+    public void ShowMenu(List<IGame> games)
     {
         PrintString("Menu\n\n");
         int IndexNr = 1;
 
-        foreach(IGame game in games)
+        foreach (IGame game in games)
         {
             PrintString($"{IndexNr}. {game.GetGameName()}");
             IndexNr++;
@@ -94,7 +90,6 @@ public class StringIO : IUI
         PrintString("For practice, number is: " + answer + "\n");
     }
 
-
     public bool ContinueOrQuit()
     {
         while (true)
@@ -116,7 +111,6 @@ public class StringIO : IUI
             }
         }
     }
-
 
     public void PromptForNewChoiceInput()
     {

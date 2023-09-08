@@ -101,3 +101,8 @@
 /Users/katarinaramer/Documents/Code/programmering i c/LaborationRefactoring/LaborationRefactoring.Test/obj/Debug/net6.0/LaborationRefactoring.Test.pdb
 /Users/katarinaramer/Documents/Code/programmering i c/LaborationRefactoring/LaborationRefactoring.Test/obj/Debug/net6.0/LaborationRefactoring.Test.genruntimeconfig.cache
 /Users/katarinaramer/Documents/Code/programmering i c/LaborationRefactoring/LaborationRefactoring.Test/obj/Debug/net6.0/ref/LaborationRefactoring.Test.dll
+/Users/katarinaramer/Documents/Code/programmering i c/LaborationRefactoring/LaborationRefactoring.Test/bin/Debug/net6.0/Castle.Core.dll
+/Users/katarinaramer/Documents/Code/programmering i c/LaborationRefactoring/LaborationRefactoring.Test/bin/Debug/net6.0/Moq.dll
+/Users/katarinaramer/Documents/Code/programmering i c/LaborationRefactoring/LaborationRefactoring.Test/bin/Debug/net6.0/System.Diagnostics.EventLog.dll
+/Users/katarinaramer/Documents/Code/programmering i c/LaborationRefactoring/LaborationRefactoring.Test/bin/Debug/net6.0/runtimes/win/lib/net6.0/System.Diagnostics.EventLog.Messages.dll
+/Users/katarinaramer/Documents/Code/programmering i c/LaborationRefactoring/LaborationRefactoring.Test/bin/Debug/net6.0/runtimes/win/lib/net6.0/System.Diagnostics.EventLog.dll

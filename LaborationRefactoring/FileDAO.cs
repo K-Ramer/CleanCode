@@ -1,11 +1,10 @@
-﻿using System;
-namespace LaborationRefactoring;
+﻿namespace LaborationRefactoring;
 
 public class FileDAO : IDAO
 {
-   
+
     public List<MooPlayer> GetMooResults()
-	{
+    {
         List<MooPlayer> results = new List<MooPlayer>();
 
         try
@@ -13,7 +12,7 @@ public class FileDAO : IDAO
             using StreamReader inputFromResults = new StreamReader("result.txt");
 
             string splitPoint = "#&#";
-            string lineValue;
+            string? lineValue;
             while ((lineValue = inputFromResults.ReadLine()) != null)
             {
                 string[] nameAndScore = lineValue.Split(new string[] { splitPoint }, StringSplitOptions.None);
@@ -48,10 +47,10 @@ public class FileDAO : IDAO
         }
 
         return results;
-}
+    }
 
-	public void AddMooResults(string name, int numberOfGuesses)
-	{
+    public void AddMooResults(string name, int numberOfGuesses)
+    {
         string splitPoint = "#&#";
 
         try
