@@ -1,43 +1,40 @@
-﻿using System;
-namespace LaborationRefactoring
+﻿namespace LaborationRefactoring;
+
+internal class Controller
 {
-	internal class Controller
-	{
-		IUI io;
-		IDAO dAO;
+    IUI io;
+    List<IGame> games;
 
-		public Controller(IUI io, IDAO dAO)
-		{
-			this.io = io;
-			this.dAO = dAO;
-		}
+    public Controller(IUI io, List<IGame> games)
+    {
+        this.io = io;
+        this.games = games;
+    }
 
-		public void Start()
-		{
-			io.PrintMenu();
+    public void Start()
+    {
+        io.ShowMenu(games);
 
-			int choice;
-			int.TryParse(io.GetString(), out choice);
+        while (true)
+        {
+            int selectedIndex = io.GetNumber() - 1;
 
-
-            switch (choice)
-			{
-				case 1:
-					MooGame mooGame = new MooGame(io, dAO);
-                    mooGame.RunGame();
-					break;
-
-				case 2:
-					io.PrintString("Other game");
-					break;
-
-				default:
-					io.PrintString("No such choice. Try again.");
-					break;
-
+            if (selectedIndex >= 0 && selectedIndex < games.Count)
+            {
+                IGame selectedGame = games[selectedIndex];
+                selectedGame.RunGame();
+                io.ShowMenu(games);
+            }
+            else if (selectedIndex == games.Count)
+            {
+                Environment.Exit(0);
+            }
+            else
+            {
+                io.PromptForNewChoiceInput();
             }
 
-		}
-	}
+        }
+    }
 }
 

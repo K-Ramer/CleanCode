@@ -1,12 +1,19 @@
-﻿using System;
-namespace LaborationRefactoring
+﻿namespace LaborationRefactoring;
+
+public interface IUI
 {
-	internal interface IUI
-	{
-		public string GetString();
-		public void PrintString(string output);
-		public void PrintMenu();
-		public void PrintTopList(List<IPlayer> output);
-	}
+    public string GetGuess();
+    public int GetNumber();
+    public string GetUserName();
+
+    public void ShowGuessFeedback(string answerFeedbackBullsOrCows);
+    public void ShowMenu(List<IGame> games);
+    public void ShowMooTopList(List<MooPlayer> results);
+    public void ShowRoundFeedback(int numberOfGuesses);
+    public void StartNewGame(string answer);
+
+    public bool ContinueOrQuit();
+
+    public void PromptForNewChoiceInput();
 }
 

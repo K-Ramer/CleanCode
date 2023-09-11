@@ -1,11 +1,10 @@
 ﻿namespace LaborationRefactoring;
 
-	internal class MooPlayer : IPlayer
-	{
+public class MooPlayer : IPlayer
+{
     public string PlayerName { get; set; }
     public int NumberOfRoundsPlayed { get; set; }
     int numberOfGuesses;
-
 
     public MooPlayer(string name, int guesses)
     {
@@ -14,23 +13,21 @@
         numberOfGuesses = guesses;
     }
 
-    public void Update(int guesses)
+    public void UpdateGuesses(int guesses)
     {
         numberOfGuesses += guesses;
         NumberOfRoundsPlayed++;
     }
 
-    public double Average()
+    public double CalculateAverageNumberOfGuesses()
     {
         return (double)numberOfGuesses / NumberOfRoundsPlayed;
     }
 
-
-    public override bool Equals(Object p)
+    public override bool Equals(object obj)
     {
-        return PlayerName.Equals(((MooPlayer)p).PlayerName);
+        return PlayerName.Equals(((MooPlayer)obj).PlayerName);
     }
-
 
     public override int GetHashCode()
     {
@@ -38,4 +35,4 @@
     }
 }
 
-	
+

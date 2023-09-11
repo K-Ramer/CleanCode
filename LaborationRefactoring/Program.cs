@@ -1,18 +1,15 @@
-﻿using System;
-namespace LaborationRefactoring;
+﻿namespace LaborationRefactoring;
 
 internal class Program
 {
-	static void Main(string[] args)
-	{
-		IUI io;
-		IDAO dAO;
+    static void Main(string[] args)
+    {
+        IUI io = new StringIO();
+        IDAO dAO = new FileDAO();
+        List<IGame> games = new List<IGame>() { new MooGame(io, dAO), new Mastermind(io, dAO) };
 
-		io = new StringIO();
-        dAO = new FileDAO();
-
-		Controller controller = new Controller(io, dAO);
-		controller.Start();
-	}
+        Controller controller = new Controller(io, games);
+        controller.Start();
+    }
 }
 
